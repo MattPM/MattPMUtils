@@ -3,10 +3,16 @@
 
 # MattPMUtils
 
+These are some utility functions.
+
+``` r
+devtools::install_github(repo = "https://github.com/MattPM/MattPMUtils")
+```
+
 <!-- badges: start -->
 <!-- badges: end -->
 
-#### some wrappers
+#### function list
 
 RunChea3  
 p.adjust.cormat  
