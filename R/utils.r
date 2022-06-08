@@ -49,16 +49,19 @@ RunChea3 = function(gene.list){
 #' @export
 #'
 #' @examples
-p.adjust.cormat = function(hmisc.cor, method = 'fdr'){ 
+p.adjust.cormat = function(hmisc.cor, method = 'fdr') {
   stopifnot(isTRUE(isSymmetric(hmisc.cor$P)))
-  p.adj =  p.adjust(hmisc.cor$P[lower.tri(hmisc.cor$P)], method = method)
-  p.adj.mx <- matrix(rep(0,ncol(hmisc.cor$P)*ncol(hmisc.cor$P)), nrow = ncol(hmisc.cor$P))
-  p.adj.mx[lower.tri(p.adj.mx)] <- p.adj
-  p.adj.mx[upper.tri(p.adj.mx)] <- p.adj
+  p.adj.lower = p.adjust(hmisc.cor$P[lower.tri(hmisc.cor$P)], method = method)
+  p.adj.upper = p.adjust(hmisc.cor$P[upper.tri(hmisc.cor$P)], method = method)
+  p.adj.mx <- matrix(rep(0, ncol(hmisc.cor$P) * ncol(hmisc.cor$P)), nrow = ncol(hmisc.cor$P))
+  p.adj.mx[lower.tri(p.adj.mx)] <- p.adj.lower
+  p.adj.mx[upper.tri(p.adj.mx)] <- p.adj.upper
   diag(p.adj.mx) = 1
   colnames(p.adj.mx) = rownames(p.adj.mx) = colnames(hmisc.cor$P)
+  stopifnot(isTRUE(isSymmetric(p.adj.mx)))
   return(p.adj.mx)
 }
+
 
 
 
